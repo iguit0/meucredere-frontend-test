@@ -1,6 +1,6 @@
-# Credere _Challenge_ Front-end :car:
+# Desafio Credere Front-end :car:
 
-<p align="center"><img align="center" width="500" height="200" src="http://imagem.b2s-space.com/upimg/60505/0/54691e2e7d.jpg"></p>
+<p align="center"><img align="center" width="500" height="200" src="http://imagem.b2s-space.com/upimg/60505/0/252383e661.png"></p>
 
 ## Estrutura de Pastas :open_file_folder:
 
@@ -8,7 +8,7 @@
 
 ## Comandos disponíveis :computer:
 
-Dentro do diretório do projeto, você pode rodar:
+Dentro do diretório do projeto, você deve rodar:
 
 ### `npm start`
 
