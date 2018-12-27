@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { userRef } from "../../../firebase";
+import MaskedInput from "react-text-mask";
 import {
   Container,
   Form,
@@ -8,7 +11,6 @@ import {
   Button,
   Input
 } from "reactstrap";
-import MaskedInput from "react-text-mask";
 
 // Data JSON
 var states = require("../../../data/states.json");
@@ -27,7 +29,7 @@ class New extends Component {
         issued_at: ""
       },
       allStates: [],
-      state: "",
+      _state: "",
       allCities: [],
       city: "",
       phones: { id: 0, code: "", number: "" },
@@ -53,11 +55,11 @@ class New extends Component {
   }
 
   // Carregar cidade por UF (Estado)
-  loadCityByState(state) {
+  loadCityByState(_state) {
     let _stateId = "";
     let _States = JSON.parse(JSON.stringify(states));
     let _Cities = JSON.parse(JSON.stringify(cities));
-    _stateId = _States.find(s => s.abbr === state);
+    _stateId = _States.find(s => s.abbr === _state);
     const _cities = _Cities.filter(city => city.state_id === _stateId.id);
     this.setState({ allCities: _cities });
   }
@@ -84,12 +86,29 @@ class New extends Component {
   }
 
   addUser() {
-    this.setState({ id: this.state.id + 1 });
-    console.log("state", this.state);
+    console.log("this.state", this.state);
+    const {
+      name,
+      birthday,
+      driver_license,
+      _state,
+      city,
+      phones,
+      emails
+    } = this.state;
+    userRef.push({
+      name,
+      birthday,
+      driver_license,
+      _state,
+      city,
+      phones,
+      emails
+    });
   }
 
   render() {
-    const { birthday, state } = this.state;
+    const { birthday, _state } = this.state;
     return (
       <Container className="mt-3">
         <h2 className="title">Cadastro</h2>
@@ -177,9 +196,9 @@ class New extends Component {
               <Label>Estado</Label>
               <select
                 className="form-control"
-                value={this.state.state}
-                onChange={e => this.setState({ state: e.target.value })}
-                onBlur={() => this.loadCityByState(state)}
+                value={this.state._state}
+                onChange={e => this.setState({ _state: e.target.value })}
+                onBlur={() => this.loadCityByState(_state)}
               >
                 {this.state.allStates.map(s => (
                   <option key={s.id} value={s.abbr}>
@@ -329,4 +348,28 @@ class New extends Component {
   }
 }
 
-export default New;
+function mapStateToProps(state) {
+  const {
+    name,
+    birthday,
+    driver_license,
+    _state,
+    city,
+    phones,
+    emails
+  } = state;
+  return {
+    name,
+    birthday,
+    driver_license,
+    _state,
+    city,
+    phones,
+    emails
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(New);

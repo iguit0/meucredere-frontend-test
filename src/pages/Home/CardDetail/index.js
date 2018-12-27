@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { userRef } from "../../../firebase";
+import { setUser } from "../../../store/actions";
+
 import {
   Col,
   Card,
@@ -12,12 +16,39 @@ import {
 } from "reactstrap";
 
 class CardDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentDidMount() {
+    userRef.on("value", snap => {
+      let users = [];
+      snap.forEach(user => {
+        //let userObj = user.val();
+        const {
+          name,
+          birthday,
+          driver_license,
+          _state,
+          city,
+          phones,
+          emails,
+          parent
+        } = user.val();
+        users.push({
+          name,
+          birthday,
+          driver_license,
+          _state,
+          city,
+          phones,
+          emails,
+          parent
+        });
+      });
+      console.log("users", users);
+      this.props.setUser(users);
+    });
   }
 
   render() {
+    console.log("this.props.users", this.props.users);
     return (
       <div>
         <h2 className="title">Teste</h2>
@@ -85,4 +116,14 @@ class CardDetail extends Component {
   }
 }
 
-export default CardDetail;
+function mapStateToProps(state) {
+  const { users } = state;
+  return {
+    users
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { setUser }
+)(CardDetail);
