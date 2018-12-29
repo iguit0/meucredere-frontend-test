@@ -4,42 +4,44 @@
 
 ## Estrutura de Pastas :open_file_folder:
 
-<p align="center"><img src="http://imagem.b2s-space.com/upimg/60505/0/05caa0d9b6.jpg"/></p>
+* **src/**
+	* **|--- assets/   # Aqui ficará imagens, etc.**
+	* **|--- data/   # Dados de cidades e estados brasileiros**
+	* **|--- pages/   # Componentes (Páginas)**
+	* **|--- App.test.js   # Teste de renderização do App**
+	* **|--- firebase.js   # Variáveis de configurações do [Firebase](https://firebase.google.com/?hl=pt-br) (nosso *back-end*)**
+	* **|--- App.js   # Arquivo que conterá configurações principais do App**
+	* **|--- index.js   # Ponto de entrada para execução do App**
+	* **|--- routes.js   # Arquivo contendo as principais rotas do App**
 
 ## Comandos disponíveis :computer:
 
 Dentro do diretório do projeto, você deve rodar:
 
+### 1. `npm install`
+
+Instala todas as dependências do projeto. :wrench:
+
 ### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Inicia o app em modo de desenvolvimento :computer: <br/>
+Abra [http://localhost:3000](http://localhost:3000) para visualizar no seu navegador.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+*OBS: A página recarrega se você faz edições* :blush:
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+*"Builda"* o app para produção. :satellite:<br/>
+Após o término do processamento, checar a pasta `build`.<br/>
+Ele agrupa corretamente o React em modo de produção e otimiza o *build* para obter o melhor desempenho.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+A compilação é minificada e os nomes dos arquivos incluem os respectivos *hashes*. <br/>
+Seu aplicativo está pronto para *deploy*! :cloud:<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Referências :book:
 
-### `npm run eject`
+Este projeto foi construído utilizando a ferramenta [Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Para saber mais sobre *React*, sua documentação se encontra disponível [neste endereço](https://reactjs.org/).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More :book:
-
-Este projeto foi baseado no projeto [Create React App](https://facebook.github.io/create-react-app/docs/getting-started).
-
-Para saber mais sobre React, sua documentação se encontra disponível [neste endereço](https://reactjs.org/).
+Para saber mais sobre o *deploy* e otimização, [leia mais aqui](https://facebook.github.io/create-react-app/docs/deployment).
