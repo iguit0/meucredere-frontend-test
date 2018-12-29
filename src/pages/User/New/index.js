@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { userRef } from "../../../firebase";
-import MaskedInput from "react-text-mask";
 import {
   Container,
   Form,
@@ -11,34 +8,28 @@ import {
   Button,
   Input
 } from "reactstrap";
+import firebase from "../../../firebase";
+import MaskedInput from "react-text-mask";
 
 // Data JSON
 var states = require("../../../data/states.json");
 var cities = require("../../../data/cities.json");
 
 class New extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+    this.ref = firebase.firestore().collection("customers");
     this.state = {
-      id: 0,
       name: "",
       birthday: "",
-      driver_license: {
-        id: 0,
-        number: "",
-        issued_at: ""
-      },
+      driver_license: [],
       allStates: [],
-      _state: "",
+      state: "MG",
       allCities: [],
-      city: "",
-      phones: { id: 0, code: "", number: "" },
-      emails: { id: 0, address: "" },
-      parent: {
-        id: 0,
-        name: "",
-        phone: { id: 0, code: "", number: "" }
-      },
+      city: "Rio Paranaíba",
+      phones: [],
+      emails: [],
+      parent: [],
       needResponsable: false,
       needDriverLicense: false
     };
@@ -46,6 +37,7 @@ class New extends Component {
 
   componentDidMount() {
     this.loadStates();
+    this.loadCityByState(this.state.state);
   }
 
   // Carregar estados brasileiros
@@ -55,11 +47,11 @@ class New extends Component {
   }
 
   // Carregar cidade por UF (Estado)
-  loadCityByState(_state) {
+  loadCityByState(state) {
     let _stateId = "";
     let _States = JSON.parse(JSON.stringify(states));
     let _Cities = JSON.parse(JSON.stringify(cities));
-    _stateId = _States.find(s => s.abbr === _state);
+    _stateId = _States.find(s => s.abbr === state);
     const _cities = _Cities.filter(city => city.state_id === _stateId.id);
     this.setState({ allCities: _cities });
   }
@@ -81,45 +73,55 @@ class New extends Component {
     else if (age >= 18)
       this.setState({
         needResponsable: false,
-        needDriverLicense: true
+        needDriverLicense: true,
+        parent: null
       });
   }
 
-  addUser() {
-    console.log("this.state", this.state);
+  onSubmit = e => {
+    e.preventDefault();
+    console.log(this.state);
     const {
       name,
       birthday,
       driver_license,
-      _state,
+      state,
       city,
       phones,
-      emails
+      emails,
+      parent
     } = this.state;
-    userRef.push({
+
+    this.ref.add({
       name,
       birthday,
       driver_license,
-      _state,
+      state,
       city,
       phones,
-      emails
+      emails,
+      parent
     });
-  }
+    this.props.history.push("/");
+  };
 
   render() {
-    const { birthday, _state } = this.state;
+    const { birthday, state } = this.state;
     return (
       <Container className="mt-3">
-        <h2 className="title">Cadastro</h2>
-        <Form>
+        <h2 className="title">CADASTRO</h2>
+        <Form onSubmit={this.onSubmit}>
           <Col>
             <FormGroup>
               <Label>Nome</Label>
               <Input
                 type="text"
                 placeholder="[Fulano de Tal]"
-                onChange={e => this.setState({ name: e.target.value })}
+                onChange={e =>
+                  this.setState({
+                    name: e.target.value
+                  })
+                }
               />
             </FormGroup>
           </Col>
@@ -143,7 +145,11 @@ class New extends Component {
                 placeholder="dd/mm/aaaa"
                 guide={false}
                 onBlur={() => this.calculateAge(birthday)}
-                onChange={e => this.setState({ birthday: e.target.value })}
+                onChange={e =>
+                  this.setState({
+                    birthday: e.target.value
+                  })
+                }
               />
             </FormGroup>
           </Col>
@@ -178,11 +184,7 @@ class New extends Component {
                   guide={false}
                   onChange={e =>
                     this.setState({
-                      driver_license: {
-                        id: this.state.driver_license.id + 1,
-                        number: e.target.value.substring(0, 8),
-                        issued_at: e.target.value.substring(9, 19)
-                      }
+                      driver_license: e.target.value
                     })
                   }
                 />
@@ -196,9 +198,13 @@ class New extends Component {
               <Label>Estado</Label>
               <select
                 className="form-control"
-                value={this.state._state}
-                onChange={e => this.setState({ _state: e.target.value })}
-                onBlur={() => this.loadCityByState(_state)}
+                onChange={e =>
+                  this.setState({
+                    state: e.target.value
+                  })
+                }
+                value={this.state.state}
+                onBlur={() => this.loadCityByState(state)}
               >
                 {this.state.allStates.map(s => (
                   <option key={s.id} value={s.abbr}>
@@ -214,7 +220,11 @@ class New extends Component {
               <select
                 className="form-control"
                 value={this.state.city}
-                onChange={e => this.setState({ city: e.target.value })}
+                onChange={e =>
+                  this.setState({
+                    city: e.target.value
+                  })
+                }
               >
                 {this.state.allCities.map(c => (
                   <option key={c.id} value={c.name}>
@@ -227,10 +237,6 @@ class New extends Component {
           <Col>
             <FormGroup>
               <Label>Telefones</Label>
-              <Button size="sm" color="primary" className="ml-1 mb-1">
-                <i className="fa fa-plus mr-1" />
-                Adicionar
-              </Button>
               <MaskedInput
                 mask={[
                   "(",
@@ -255,11 +261,7 @@ class New extends Component {
                 guide={false}
                 onChange={e =>
                   this.setState({
-                    phones: {
-                      id: this.state.phones.id + 1,
-                      code: e.target.value.substring(0, 4),
-                      number: e.target.value.substring(4, 16)
-                    }
+                    phones: e.target.value
                   })
                 }
               />
@@ -274,10 +276,7 @@ class New extends Component {
                 placeholder="seu@email.com"
                 onChange={e =>
                   this.setState({
-                    emails: {
-                      id: this.state.emails.id + 1,
-                      address: e.target.value
-                    }
+                    emails: e.target.value
                   })
                 }
               />
@@ -294,7 +293,6 @@ class New extends Component {
                   onChange={e =>
                     this.setState({
                       parent: {
-                        id: this.state.parent.id + 1,
                         name: e.target.value
                       }
                     })
@@ -324,13 +322,16 @@ class New extends Component {
                   guide={false}
                   onChange={e =>
                     this.setState({
-                      parent: {
-                        phone: {
-                          id: this.state.parent.id + 1,
-                          code: e.target.value.substring(0, 4),
-                          number: e.target.value.substring(4, 16)
+                      parent: [
+                        {
+                          phone: [
+                            {
+                              code: e.target.value.substring(0, 4),
+                              number: e.target.value.substring(4, 16)
+                            }
+                          ]
                         }
-                      }
+                      ]
                     })
                   }
                 />
@@ -339,7 +340,7 @@ class New extends Component {
           ) : (
             <div />
           )}
-          <Button color="success" block onClick={() => this.addUser()}>
+          <Button color="success" block>
             Salvar Cliente
           </Button>
         </Form>
@@ -348,28 +349,4 @@ class New extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const {
-    name,
-    birthday,
-    driver_license,
-    _state,
-    city,
-    phones,
-    emails
-  } = state;
-  return {
-    name,
-    birthday,
-    driver_license,
-    _state,
-    city,
-    phones,
-    emails
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  null
-)(New);
+export default New;

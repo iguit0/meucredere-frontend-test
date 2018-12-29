@@ -1,14 +1,19 @@
 import * as firebase from "firebase";
+import firestore from "firebase/firestore";
 
-// Initialize Firebase
+const settings = { timestampsInSnapshots: true };
+
 const config = {
   apiKey: "AIzaSyC0RVQWK0unaZ0NzR98JbMgInfDfnvY8NI",
   authDomain: "meucredere.firebaseapp.com",
   databaseURL: "https://meucredere.firebaseio.com",
   projectId: "meucredere",
-  storageBucket: "",
+  storageBucket: "meucredere.appspot.com",
   messagingSenderId: "1069149525375"
 };
 
-export const firebaseApp = firebase.initializeApp(config);
-export const userRef = firebase.database().ref("users");
+firebase.initializeApp(config);
+
+firebase.firestore().settings(settings);
+
+export default firebase;

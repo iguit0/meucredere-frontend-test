@@ -12,17 +12,14 @@
     "url": "https://github.com/iguit0/meucredere-frontend-test.git"
   },
   "dependencies": {
-    "bootstrap": "^4.2.1",
-    "firebase": "^5.7.1",
+    "firebase": "^5.7.2",
     "font-awesome": "^4.7.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-redux": "^5.0.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.2",
     "react-text-mask": "^5.4.3",
-    "reactstrap": "^6.5.0",
-    "redux": "^3.6.0"
+    "reactstrap": "^6.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,5 +35,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "bootstrap": "^4.2.1"
+  }
 }
