@@ -9,15 +9,17 @@
    1. [firebase](https://firebase.google.com/?hl=pt-br): 5.7.0
 ## Estrutura de Pastas :open_file_folder:
 
-* **src/**
-	* **|--- assets/   # Aqui ficará imagens, etc.**
-	* **|--- data/   # Dados de cidades e estados brasileiros**
-	* **|--- pages/   # Componentes (Páginas)**
-	* **|--- App.test.js   # Teste de renderização do App**
-	* **|--- firebase.js   # Variáveis de configurações do [Firebase](https://firebase.google.com/?hl=pt-br) (nosso *back-end*)**
-	* **|--- App.js   # Arquivo que conterá configurações principais do App**
-	* **|--- index.js   # Ponto de entrada para execução do App**
-	* **|--- routes.js   # Arquivo contendo as principais rotas do App**
+------
+    .
+    ├── assets              # Aqui ficará imagens, etc.
+    ├── data                # Dados de cidades e estados brasileiros
+    ├── pages               # Componentes (Páginas)
+    ├── App.js              # Arquivo que conterá configurações principais do App
+    ├── App.test.js         # Teste de renderização do App
+    ├── index.js            # Ponto de entrada para execução do App
+    ├── routes.js           # Arquivo contendo as principais rotas do App
+    ├── firebase.js         # Variáveis de configurações do Firebase (nosso back-end)
+------
 
 ## Comandos disponíveis :computer:
 
