@@ -48,19 +48,16 @@ class NavbarComponent extends Component {
                   <i className="fa fa-plus mr-1" />
                   Cadastrar
                 </DropdownItem>
-                <DropdownItem href="/alterar">
-                  <i className="fa fa-pencil mr-1" />
-                  Editar
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem href="/listar">
-                  <i className="fa fa-th-list mr-1" />
-                  Listar Todos
-                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
-              <NavLink href="/ajuda">Ajuda</NavLink>
+              <NavLink
+                href="https://github.com/iguit0/meucredere-frontend-test"
+                target="_blank"
+              >
+                <i className="fa fa-github mr-1" />
+                Github
+              </NavLink>
             </NavItem>
           </Nav>
         </Collapse>

@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // Components
 import Home from "./pages/Home";
-import Help from "./pages/Help";
 import NewUser from "./pages/User/New";
 import EditUser from "./pages/User/Edit";
 import UserList from "./pages/User/List";
@@ -16,7 +15,6 @@ const Routes = () => (
       <Route path="/cadastrar" component={NewUser} />
       <Route path="/alterar/:id" component={EditUser} />
       <Route path="/listar/:id" component={UserList} />
-      <Route path="/ajuda" component={Help} />
       <Route path="*" component={NotFound} />
     </Switch>
   </BrowserRouter>

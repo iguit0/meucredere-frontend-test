@@ -10,7 +10,6 @@ import {
 } from "reactstrap";
 import MaskedInput from "react-text-mask";
 import firebase from "../../../firebase";
-import { Link } from "react-router-dom";
 
 // Data JSON
 var states = require("../../../data/states.json");
@@ -37,6 +36,7 @@ class Edit extends Component {
 
   componentDidMount() {
     this.loadStates();
+    //this.loadCityByState(this.state.state);
     const ref = firebase
       .firestore()
       .collection("customers")
@@ -44,6 +44,7 @@ class Edit extends Component {
     ref.get().then(doc => {
       if (doc.exists) {
         const customer = doc.data();
+        this.loadCityByState(customer.state);
         this.setState({
           key: doc.id,
           name: customer.name,
@@ -56,9 +57,18 @@ class Edit extends Component {
           parent: customer.parent
         });
       } else {
-        console.log("No such document!");
+        console.log("No such costumer!");
       }
     });
+    if (this.calculateAge(this.state.birthday) < 18) {
+      this.setState({ needResponsable: true, needDriverLicense: false });
+    } else {
+      this.setState({
+        needResponsable: false,
+        needDriverLicense: true,
+        parent: null
+      });
+    }
   }
 
   // Carregar estados brasileiros
@@ -69,11 +79,12 @@ class Edit extends Component {
 
   // Carregar cidade por UF (Estado)
   loadCityByState(state) {
-    let _stateId = "";
+    let _stateId = [];
+    let _cities = [];
     let _States = JSON.parse(JSON.stringify(states));
     let _Cities = JSON.parse(JSON.stringify(cities));
     _stateId = _States.find(s => s.abbr === state);
-    const _cities = _Cities.filter(city => city.state_id === _stateId.id);
+    _cities = _Cities.filter(city => city.state_id === _stateId.id);
     this.setState({ allCities: _cities });
   }
 
@@ -89,21 +100,8 @@ class Edit extends Component {
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-    if (age < 18)
-      this.setState({ needResponsable: true, needDriverLicense: false });
-    else if (age >= 18)
-      this.setState({
-        needResponsable: false,
-        needDriverLicense: true,
-        parent: null
-      });
+    return age;
   }
-
-  onChange = e => {
-    const state = this.state;
-    state[e.target.name] = e.target.value;
-    this.setState({ costumer: state });
-  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -137,7 +135,6 @@ class Edit extends Component {
   };
 
   render() {
-    const { birthday, state } = this.state;
     return (
       <Container className="mt-3">
         <h2 className="title">EDITAR</h2>
@@ -177,7 +174,6 @@ class Edit extends Component {
                 placeholder="dd/mm/aaaa"
                 value={this.state.birthday}
                 guide={false}
-                onBlur={() => this.calculateAge(birthday)}
                 onChange={e =>
                   this.setState({
                     birthday: e.target.value
@@ -191,7 +187,7 @@ class Edit extends Component {
               <FormGroup>
                 <Label>Carteira de Motorista</Label>
                 <MaskedInput
-                  value={this.state.driver_license}
+                  value={this.state.driver_license.toString()}
                   mask={[
                     /[1-9]/,
                     /\d/,
@@ -238,7 +234,6 @@ class Edit extends Component {
                     state: e.target.value
                   })
                 }
-                onBlur={() => this.loadCityByState(state)}
               >
                 {this.state.allStates.map(s => (
                   <option key={s.id} value={s.abbr}>
@@ -253,6 +248,7 @@ class Edit extends Component {
               <Label>Cidade</Label>
               <select
                 className="form-control"
+                value={this.state.city}
                 onChange={e =>
                   this.setState({
                     city: e.target.value

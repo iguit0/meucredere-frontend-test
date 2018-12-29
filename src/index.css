@@ -4,8 +4,25 @@
   font-family: "Nunito", sans-serif;
   font-size: 45px;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 a:hover {
   text-decoration: none;
+}
+
+.card {
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+}
+
+.card-title {
+  font-family: "Nunito", sans-serif;
+  font-size: 35px;
+}
+
+.card-subtitle {
+  font-family: "Nunito", sans-serif;
+  font-size: 20px;
+  margin-bottom: 10px;
 }

@@ -110,6 +110,7 @@ class List extends Component {
               )}
               <Link to={`/alterar/${this.state.key}`}>
                 <Button color="primary" block>
+                  <i className="fa fa-pencil mr-1" />
                   EDITAR
                 </Button>
                 <Button
@@ -117,6 +118,7 @@ class List extends Component {
                   color="danger"
                   block
                 >
+                  <i className="fa fa-ban mr-1" />
                   DELETAR
                 </Button>
               </Link>
