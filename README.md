@@ -2,6 +2,11 @@
 
 <p align="center"><img align="center" width="500" height="200" src="http://imagem.b2s-space.com/upimg/60505/0/252383e661.png"></p>
 
+1. Projeto desenvolvido com as versões :nut_and_bolt: 
+   1. [node](https://nodejs.org/en/): v8.11.3
+   1. [react](https://reactjs.org/): v16.7.0
+   1. [reactstrap](https://reactstrap.github.io/): 6.5.0
+   1. [firebase](https://firebase.google.com/?hl=pt-br): 5.7.0
 ## Estrutura de Pastas :open_file_folder:
 
 * **src/**
@@ -20,16 +25,16 @@ Dentro do diretório do projeto, você deve rodar:
 
 ### 1. `npm install`
 
-Instala todas as dependências do projeto. :wrench:
+Instala todas as dependências necessárias do projeto. :wrench:
 
-### `npm start`
+### 2. `npm start`
 
 Inicia o app em modo de desenvolvimento :computer: <br/>
 Abra [http://localhost:3000](http://localhost:3000) para visualizar no seu navegador.
 
 *OBS: A página recarrega se você faz edições* :blush:
 
-### `npm run build`
+### (Opcional) 3. `npm run build`
 
 *"Builda"* o app para produção. :satellite:<br/>
 Após o término do processamento, checar a pasta `build`.<br/>
