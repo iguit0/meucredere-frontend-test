@@ -12,8 +12,8 @@ import firebase from "../../../firebase";
 import MaskedInput from "react-text-mask";
 
 // Data JSON
-var states = require("../../../data/states.json");
-var cities = require("../../../data/cities.json");
+const states = require("../../../data/states.json");
+const cities = require("../../../data/cities.json");
 
 class New extends Component {
   constructor() {
@@ -22,14 +22,14 @@ class New extends Component {
     this.state = {
       name: "",
       birthday: "",
-      driver_license: [],
+      driver_license: "",
       allStates: [],
       state: "MG",
       allCities: [],
-      city: "Rio Paranaíba",
-      phones: [],
-      emails: [],
-      parent: [],
+      city: "",
+      phones: "",
+      emails: "",
+      parent: { name: "", phone: ""},
       needResponsable: false,
       needDriverLicense: false
     };
@@ -59,7 +59,7 @@ class New extends Component {
   // Calcular idade (se precisa de responsavel)
   calculateAge(birthday) {
     var today = new Date();
-    var birthDate = new Date(birthday);
+    var birthDate = new Date(birthday.replace(/(\d{2}\/)(\d{2}\/)(\d{4})/,'$2$1$3'));
 
     var age = today.getFullYear() - birthDate.getFullYear();
 
@@ -236,7 +236,7 @@ class New extends Component {
           </Col>
           <Col>
             <FormGroup>
-              <Label>Telefones</Label>
+              <Label>Telefone</Label>
               <MaskedInput
                 mask={[
                   "(",
@@ -322,16 +322,10 @@ class New extends Component {
                   guide={false}
                   onChange={e =>
                     this.setState({
-                      parent: [
+                      parent: 
                         {
-                          phone: [
-                            {
-                              code: e.target.value.substring(0, 4),
-                              number: e.target.value.substring(4, 16)
-                            }
-                          ]
+                          phone: e.target.value
                         }
-                      ]
                     })
                   }
                 />

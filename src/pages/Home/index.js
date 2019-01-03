@@ -29,7 +29,7 @@ class Home extends Component {
         driver_license,
         state,
         city,
-        phone,
+        phones,
         emails,
         parent
       } = doc.data();
@@ -41,7 +41,7 @@ class Home extends Component {
         driver_license,
         state,
         city,
-        phone,
+        phones,
         emails,
         parent
       });
@@ -55,7 +55,7 @@ class Home extends Component {
 
   calculateAge(birthday) {
     var today = new Date();
-    var birthDate = new Date(birthday);
+    var birthDate = new Date(birthday.replace(/(\d{2}\/)(\d{2}\/)(\d{4})/,'$2$1$3'));
 
     var age = today.getFullYear() - birthDate.getFullYear();
 
@@ -68,6 +68,7 @@ class Home extends Component {
   }
 
   render() {
+    const anyCustomer = this.state.customers && this.state.customers.length;
     console.log("this.state.customers", this.state.customers);
     return (
       <Container className="mt-3">
@@ -75,28 +76,36 @@ class Home extends Component {
           LEITOR DE NOVIDADES ({this.state.customers.length})
         </h2>
         <Row>
-          <Col sm="6">
-            {this.state.customers.map((customer, index) => (
-              <Card body key={index} className="mb-1">
-                <CardTitle className="text-center">{customer.name}</CardTitle>
-                <CardSubtitle className="text-center">Cliente</CardSubtitle>
-                <CardText>
-                  <i className="fa fa-birthday-cake mr-1" />
-                  {customer.birthday} · {this.calculateAge(customer.birthday)}{" "}
-                  anos
-                </CardText>
-                <CardText>
-                  <i className="fa fa-building mr-1" />
-                  {customer.city} · {customer.state}
-                </CardText>
-                <Link to={`/listar/${customer.key}`}>
-                  <Button color="primary" block>
-                    VER DETALHES
-                  </Button>
-                </Link>
-              </Card>
-            ))}
-          </Col>
+          {anyCustomer ? (
+            <Col sm="6">
+              {this.state.customers.map((customer, index) => (
+                <Card body key={index} className="mb-1">
+                  <CardTitle className="text-center">{customer.name}</CardTitle>
+                  <CardSubtitle className="text-center">Cliente</CardSubtitle>
+                  <CardText>
+                    <i className="fa fa-birthday-cake mr-1" />
+                    {customer.birthday} · {this.calculateAge(customer.birthday)}{" "}
+                    anos
+                  </CardText>
+                  <CardText>
+                    <i className="fa fa-building mr-1" />
+                    {customer.city} · {customer.state}
+                  </CardText>
+                  <Link to={`/listar/${customer.key}`}>
+                    <Button color="primary" block>
+                      VER DETALHES
+                    </Button>
+                  </Link>
+                </Card>
+              ))}
+            </Col>
+          ) : (
+            <Col className="text-center">
+              <Button color="primary" href="/cadastrar">
+                CADASTRE UM CLIENTE AGORA
+              </Button>
+            </Col>
+          )}
         </Row>
       </Container>
     );
