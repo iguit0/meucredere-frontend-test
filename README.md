@@ -1,7 +1,5 @@
 # Desafio Credere Front-end :car:
 
-<p align="center"><img align="center" width="500" height="200" src="http://imagem.b2s-space.com/upimg/60505/0/252383e661.png"></p>
-
 1. Projeto desenvolvido com as versões :nut_and_bolt: 
    1. [node](https://nodejs.org/en/): v8.11.3
    1. [react](https://reactjs.org/): v16.7.0
