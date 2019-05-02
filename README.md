@@ -1,4 +1,4 @@
-# Desafio Credere Front-end :car:
+<h2 align="center">Desafio Credere Front-end :car:</h2>
 
 1. Projeto desenvolvido com as versões :nut_and_bolt: 
    1. [node](https://nodejs.org/en/): v8.11.3
