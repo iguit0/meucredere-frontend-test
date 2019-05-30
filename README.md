@@ -1,10 +1,11 @@
-<h2 align="center">Desafio Credere Front-end :car:</h2>
+<h2 align="center">Desafio Front-end :car:</h2>
 
 1. Projeto desenvolvido com as versões :nut_and_bolt: 
    1. [node](https://nodejs.org/en/): v8.11.3
    1. [react](https://reactjs.org/): v16.7.0
    1. [reactstrap](https://reactstrap.github.io/): v6.5.0
    1. [firebase](https://firebase.google.com/?hl=pt-br): v5.7.0
+   
 ## Estrutura de Pastas :open_file_folder:
 
 ------
